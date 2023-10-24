@@ -18,7 +18,6 @@ void main() async {
   };
 
 // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
 
   runApp(
     MultiProvider(
