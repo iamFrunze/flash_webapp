@@ -1,30 +1,38 @@
+import 'dart:convert';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:teacher_review/app.dart';
+import 'package:teacher_review/screens/add_admin/admin_provider.dart';
+import 'package:teacher_review/screens/add_student/student_provider.dart';
+import 'package:teacher_review/screens/add_teacher/teacher_provider.dart';
+import 'package:teacher_review/screens/template_review/template_review_provider.dart';
 import 'package:teacher_review/utils/app_settings.dart';
 
-void main() async {
-  usePathUrlStrategy();
-  await GetStorage.init();
-  const firebaseConfig = {
-    'apiKey': "AIzaSyC15MWJMVX1J4Z3aqDkXhjCciNMdolVh0A",
-    'authDomain': "flash-webapp-8b454.firebaseapp.com",
-    'projectId': "flash-webapp-8b454",
-    'storageBucket': "flash-webapp-8b454.appspot.com",
-    'messagingSenderId': "78093457850",
-    'appId': "1:78093457850:web:f50ef19648287abe0ce583"
-  };
+import 'firebase_options.dart';
 
-// Initialize Firebase
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  usePathUrlStrategy();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseDatabase.instance;
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AppSettings()),
+        ChangeNotifierProvider(create: (context) => AdminProvider()),
+        ChangeNotifierProvider(create: (context) => TeacherProvider()),
+        ChangeNotifierProvider(create: (context) => StudentProvider()),
+        ChangeNotifierProvider(create: (context) => TemplateReviewProvider()),
       ],
-      child: const MaterialApp(home: App()),
+      child: const App(),
     ),
   );
 }

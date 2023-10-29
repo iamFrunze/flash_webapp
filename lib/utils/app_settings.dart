@@ -1,27 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:teacher_review/screens/widgets/tiles.dart';
+import 'package:teacher_review/data/person_model.dart';
 
-enum DisplayMode {
-  desktop,
-  mobile,
-}
+import '../res/app_dimensions.dart';
 
 class AppSettings extends ChangeNotifier {
-  late DisplayMode displayMode;
-  final List<TilesWidget> teachers = [];
-  final List<TilesWidget> students = [];
-
-  void initDisplayState(context) {
-    final width = MediaQuery.of(context).size.width;
-    if (width > 1024) {
-      displayMode = DisplayMode.desktop;
-    } else {
-      displayMode = DisplayMode.mobile;
-    }
-  }
-
-  void addTeacher(String fio, String desc) {
-    teachers.add(TilesWidget(title: fio, subTitle: desc));
-    notifyListeners();
-  }
+  late PersonModel currentAdmin;
+  late PersonModel currentTeacher;
+  late PersonModel currentStudent;
 }
