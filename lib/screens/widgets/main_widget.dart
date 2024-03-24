@@ -1,8 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:flash/screens/widgets/tiles.dart';
 import 'package:flutter/material.dart';
-import 'package:teacher_review/data/person_model.dart';
-import 'package:teacher_review/res/app_dimensions.dart';
-import 'package:teacher_review/screens/widgets/tiles.dart';
+
+import '../../data/person_model.dart';
+import '../../res/app_dimensions.dart';
 
 class MainWidget extends StatelessWidget {
   const MainWidget({
@@ -15,12 +16,14 @@ class MainWidget extends StatelessWidget {
     required this.onTapCard,
     required this.appDimensions,
     required this.onDeleteElement,
+    required this.isStudent,
   });
 
   final String title;
   final String? subTitle;
+  final bool isStudent;
   final List<PersonModel> listData;
-  final Function(String title) addElement;
+  final Future<void> Function(String title) addElement;
   final Function(PersonModel person) onDeleteElement;
   final Function(PersonModel person) onTapCard;
   final AppDimensions appDimensions;
@@ -30,6 +33,8 @@ class MainWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        foregroundColor: const Color(0xf0A65200),
+        backgroundColor: const Color(0xffffb873),
         onPressed: () {
           showDialog<String>(
             context: context,
@@ -46,16 +51,23 @@ class MainWidget extends StatelessWidget {
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Назад'),
+                  child: const Text(
+                    'Назад',
+                    style: TextStyle(color: Color(0xf0A65200)),
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
-                    addElement(controller.text);
-                    Navigator.pop(
-                      context,
+                    addElement(controller.text).whenComplete(
+                      () => Navigator.pop(
+                        context,
+                      ),
                     );
                   },
-                  child: const Text('Добавить'),
+                  child: const Text(
+                    'Добавить',
+                    style: TextStyle(color: Color(0xf0A65200)),
+                  ),
                 ),
               ],
             ),
@@ -70,64 +82,86 @@ class MainWidget extends StatelessWidget {
               horizontal: appDimensions.padding(),
             ),
             decoration: const BoxDecoration(
-              color: Color(0xFF35C4AF),
+              color: Color(0xFF00ada3),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    AutoSizeText(
-                      title,
-                      style: TextStyle(
-                        color: const Color(0xFF003F49),
-                        fontWeight: FontWeight.bold,
-                        fontSize: appDimensions.textTitleSize(),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Visibility(
+                    visible: AutoRouter.of(context).canNavigateBack,
+                    child: IconButton(
+                      onPressed: () {
+                        AutoRouter.of(context).back();
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
                       ),
                     ),
-                    if (subTitle != null)
+                  ),
+                  Column(
+                    children: [
                       Text(
-                        subTitle!,
+                        title,
                         style: TextStyle(
                           color: const Color(0xFF003F49),
                           fontWeight: FontWeight.bold,
-                          fontSize: appDimensions.textSubTitleSize(),
+                          fontSize: appDimensions.textTitleSize(),
                         ),
                       ),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Image.asset(
+                      if (subTitle != null)
+                        Text(
+                          subTitle!,
+                          style: TextStyle(
+                            color: const Color(0xFF003F49),
+                            fontWeight: FontWeight.bold,
+                            fontSize: appDimensions.textSubTitleSize(),
+                          ),
+                        ),
+                    ],
+                  ),
+                  Image.asset(
                     'assets/logo.png',
                     width: appDimensions.logoSize(),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 16),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: listData.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: appDimensions.padding(),
-                ),
-                child: TilesWidget(
-                  key: ValueKey<String>(listData[index].uuid),
-                  title: listData[index].name,
-                  onTap: () => onTapCard(listData[index]),
-                  onDelete: () => onDeleteElement(listData[index]),
-                ),
-              );
-            },
-          ),
+          listData.isNotEmpty
+              ? Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: appDimensions.padding(),
+                        ),
+                        child: TilesWidget(
+                          key: ValueKey<String>(listData[index].uuid),
+                          id: isStudent ? listData[index].uuid : null,
+                          title: listData[index].name,
+                          onTap: () => onTapCard(listData[index]),
+                          onDelete: () => onDeleteElement(listData[index]),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : const Center(
+                  child: Text('Нажмите на +, чтобы добавить'),
+                )
         ],
       ),
     );

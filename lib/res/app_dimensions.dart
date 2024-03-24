@@ -27,10 +27,10 @@ class AppMobileDimensions extends AppDimensions {
   double padding() => 16;
 
   @override
-  double textTitleSize() => 18;
+  double textTitleSize() => 15;
 
   @override
-  double textSubTitleSize() => 16;
+  double textSubTitleSize() => 14;
 
   @override
   double logoSize() => 48;

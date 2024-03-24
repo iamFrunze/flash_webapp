@@ -1,14 +1,15 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:teacher_review/data/person_model.dart';
 import 'package:uuid/uuid.dart';
+
+import '../../data/person_model.dart';
 
 class TeacherProvider extends ChangeNotifier {
   final uuid = const Uuid();
   final List<PersonModel> teachers = [];
-  late final PersonModel? _admin;
+  PersonModel? _admin;
   final TextEditingController teacherController = TextEditingController();
-  final database = FirebaseDatabase.instance.ref("admins");
+  final database = FirebaseDatabase.instance.ref().child("admins");
 
   void init(PersonModel admin) {
     _admin = admin;
@@ -21,18 +22,19 @@ class TeacherProvider extends ChangeNotifier {
         .onValue
         .listen((snapshot) {
       teachers.clear();
-
+      notifyListeners();
       if (snapshot.snapshot.exists) {
         Map<dynamic, dynamic> teachersParse =
             snapshot.snapshot.value as Map<dynamic, dynamic>;
         teachersParse.forEach((key, value) {
-          final userId = '$key';
+          final userId = '${value["uuid"]}';
           final name = '${value["name"]}';
           final person = PersonModel(
             name: name,
             uuid: userId,
           );
           teachers.add(person);
+          teachers.sort((a, b) => a.name.compareTo(b.name));
 
           notifyListeners();
         });
@@ -50,7 +52,7 @@ class TeacherProvider extends ChangeNotifier {
 
   Future<void> _setToDB(PersonModel person) async {
     if (_admin != null) {
-      database.child(_admin!.uuid).child('teachers').child(person.uuid).set({
+      await  database.child(_admin!.uuid).child('teachers').child(person.uuid).set({
         "uuid": person.uuid,
         "name": person.name,
       });

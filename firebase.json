@@ -10,12 +10,7 @@
       "**/node_modules/**"
     ],
     "frameworksBackend": {
-      "region": "us-central1"
+      "region": "europe-west1"
     }
-  },
-  "firestore": {
-    "rules": "firestore.rules",
-    "indexes": "firestore.indexes.json"
-  },
-  "extensions": {}
+  }
 }

@@ -1,22 +1,18 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flash/screens/add_student/student_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:teacher_review/data/person_model.dart';
-import 'package:teacher_review/screens/add_student/student_provider.dart';
-import 'package:teacher_review/utils/app_router.gr.dart';
 
+import '../../data/person_model.dart';
+import '../../utils/app_router.gr.dart';
+import '../../utils/app_settings.dart';
 import '../widgets/responsive_main_screen_widget.dart';
 
 @RoutePage()
 class AddStudentScreen extends StatefulWidget {
   const AddStudentScreen({
     super.key,
-    required this.teacher,
-    required this.admin,
   });
-
-  final PersonModel teacher;
-  final PersonModel admin;
 
   @override
   State<AddStudentScreen> createState() => _AddStudentScreenState();
@@ -25,9 +21,19 @@ class AddStudentScreen extends StatefulWidget {
 class _AddStudentScreenState extends State<AddStudentScreen> {
   @override
   void initState() {
-    Provider.of<StudentProvider>(context, listen: false)
-        .init(widget.admin, widget.teacher);
+    if (mounted) {
+      final admin =
+          Provider.of<AppSettings>(context, listen: false).currentAdmin;
+      final teacher =
+          Provider.of<AppSettings>(context, listen: false).currentTeacher;
+      if (admin != null && teacher != null) {
 
+        Provider.of<StudentProvider>(context, listen: false)
+            .init(admin, teacher);
+      } else {
+        AutoRouter.of(context).navigate(const AddAdminRoute());
+      }
+    }
     super.initState();
   }
 
@@ -35,19 +41,28 @@ class _AddStudentScreenState extends State<AddStudentScreen> {
   Widget build(BuildContext context) {
     final watcher = Provider.of<StudentProvider>(context);
     final reader = Provider.of<StudentProvider>(context, listen: false);
+    final appReader = Provider.of<AppSettings>(context);
+    final appWatcher = Provider.of<AppSettings>(context);
 
-    return ResponsiveMainScreenWidget(
-      title: 'Список учеников',
-      subTitle: 'Учитель: ${widget.teacher.name}',
-      listData: watcher.students,
-      addElement: reader.addStudent,
-      onDeleteElement: reader.onRemove,
-      controller: watcher.studentController,
-      onTapCard: (PersonModel value) {
-        AutoRouter.of(context).navigate(
-          ResponsiveTemplateReviewRoute(id: value.uuid, student: value),
-        );
-      },
-    );
+
+    if (appReader.currentTeacher != null) {
+      return ResponsiveMainScreenWidget(
+        title: 'Список учеников',
+        subTitle: 'Учитель: ${appWatcher.currentTeacher!.name}',
+        listData: watcher.students,
+        addElement: reader.addStudent,
+        onDeleteElement: reader.onRemove,
+        isStudent: true,
+        controller: watcher.studentController,
+        onTapCard: (PersonModel value) {
+          appReader.setupStudent(value);
+          AutoRouter.of(context).push(
+            ResponsiveTemplateReviewRoute(id: value.uuid),
+          );
+        },
+      );
+    } else {
+      return const CircularProgressIndicator();
+    }
   }
 }

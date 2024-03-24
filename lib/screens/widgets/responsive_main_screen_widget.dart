@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:teacher_review/data/person_model.dart';
-import 'package:teacher_review/res/app_dimensions.dart';
-import 'package:teacher_review/screens/widgets/main_widget.dart';
-import 'package:teacher_review/utils/responsive_widget.dart';
+
+import '../../data/person_model.dart';
+import '../../res/app_dimensions.dart';
+import '../../utils/responsive_widget.dart';
+import 'main_widget.dart';
 
 class ResponsiveMainScreenWidget extends StatelessWidget {
   const ResponsiveMainScreenWidget({
@@ -14,15 +15,16 @@ class ResponsiveMainScreenWidget extends StatelessWidget {
     required this.controller,
     required this.onTapCard,
     required this.onDeleteElement,
+    required this.isStudent,
   });
 
   final String title;
   final String? subTitle;
   final List<PersonModel> listData;
-  final Function(String title) addElement;
+  final Future<void> Function(String title) addElement;
   final Function(PersonModel person) onDeleteElement;
   final Function(PersonModel person) onTapCard;
-
+  final bool isStudent;
   final TextEditingController controller;
 
   @override
@@ -36,6 +38,7 @@ class ResponsiveMainScreenWidget extends StatelessWidget {
         onDeleteElement: onDeleteElement,
         controller: controller,
         onTapCard: onTapCard,
+        isStudent: isStudent,
         appDimensions: AppDesktopDimensions(),
       ),
       mobile: MainWidget(
@@ -46,6 +49,7 @@ class ResponsiveMainScreenWidget extends StatelessWidget {
         onDeleteElement: onDeleteElement,
         controller: controller,
         onTapCard: onTapCard,
+        isStudent: isStudent,
         appDimensions: AppMobileDimensions(),
       ),
       tablet: MainWidget(
@@ -56,6 +60,7 @@ class ResponsiveMainScreenWidget extends StatelessWidget {
         onDeleteElement: onDeleteElement,
         controller: controller,
         onTapCard: onTapCard,
+        isStudent: isStudent,
         appDimensions: AppTabletDimensions(),
       ),
     );

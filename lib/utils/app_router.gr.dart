@@ -8,57 +8,69 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
-import 'package:teacher_review/data/person_model.dart' as _i7;
-import 'package:teacher_review/screens/add_admin/add_admin_screen.dart' as _i1;
-import 'package:teacher_review/screens/add_student/add_student_screen.dart'
-    as _i2;
-import 'package:teacher_review/screens/add_teacher/add_teacher_screen.dart'
-    as _i3;
-import 'package:teacher_review/screens/template_review/responsive_template_review_screen.dart'
-    as _i4;
+import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:flash/screens/add_admin/add_admin_screen.dart' as _i1;
+import 'package:flash/screens/add_student/add_student_screen.dart' as _i2;
+import 'package:flash/screens/add_teacher/add_teacher_screen.dart' as _i3;
+import 'package:flash/screens/not_found/not_fount_screen.dart' as _i4;
+import 'package:flash/screens/parent_review/responsive_parent_review_screen.dart'
+    as _i5;
+import 'package:flash/screens/template_review/responsive_template_review_screen.dart'
+    as _i6;
+import 'package:flutter/material.dart' as _i8;
 
-abstract class $AppRouter extends _i5.RootStackRouter {
+abstract class $AppRouter extends _i7.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i5.PageFactory> pagesMap = {
+  final Map<String, _i7.PageFactory> pagesMap = {
     AddAdminRoute.name: (routeData) {
-      return _i5.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const _i1.AddAdminScreen(),
       );
     },
     AddStudentRoute.name: (routeData) {
-      final args = routeData.argsAs<AddStudentRouteArgs>();
-      return _i5.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.AddStudentScreen(
-          key: args.key,
-          teacher: args.teacher,
-          admin: args.admin,
-        ),
+        child: const _i2.AddStudentScreen(),
       );
     },
     AddTeacherRoute.name: (routeData) {
-      final args = routeData.argsAs<AddTeacherRouteArgs>();
-      return _i5.AutoRoutePage<dynamic>(
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.AddTeacherScreen(
+        child: const _i3.AddTeacherScreen(),
+      );
+    },
+    NotFoundRoute.name: (routeData) {
+      return _i7.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.NotFoundScreen(),
+      );
+    },
+    ResponsiveParentReviewRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ResponsiveParentReviewRouteArgs>(
+          orElse: () =>
+              ResponsiveParentReviewRouteArgs(id: pathParams.getString('id')));
+      return _i7.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: _i5.ResponsiveParentReviewScreen(
           key: args.key,
-          admin: args.admin,
+          id: args.id,
         ),
       );
     },
     ResponsiveTemplateReviewRoute.name: (routeData) {
-      final args = routeData.argsAs<ResponsiveTemplateReviewRouteArgs>();
-      return _i5.AutoRoutePage<dynamic>(
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<ResponsiveTemplateReviewRouteArgs>(
+          orElse: () => ResponsiveTemplateReviewRouteArgs(
+              id: pathParams.getString('id')));
+      return _i7.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i4.ResponsiveTemplateReviewScreen(
+        child: _i6.ResponsiveTemplateReviewScreen(
           key: args.key,
           id: args.id,
-          student: args.student,
         ),
       );
     },
@@ -67,8 +79,8 @@ abstract class $AppRouter extends _i5.RootStackRouter {
 
 /// generated route for
 /// [_i1.AddAdminScreen]
-class AddAdminRoute extends _i5.PageRouteInfo<void> {
-  const AddAdminRoute({List<_i5.PageRouteInfo>? children})
+class AddAdminRoute extends _i7.PageRouteInfo<void> {
+  const AddAdminRoute({List<_i7.PageRouteInfo>? children})
       : super(
           AddAdminRoute.name,
           initialChildren: children,
@@ -76,105 +88,104 @@ class AddAdminRoute extends _i5.PageRouteInfo<void> {
 
   static const String name = 'AddAdminRoute';
 
-  static const _i5.PageInfo<void> page = _i5.PageInfo<void>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i2.AddStudentScreen]
-class AddStudentRoute extends _i5.PageRouteInfo<AddStudentRouteArgs> {
-  AddStudentRoute({
-    _i6.Key? key,
-    required _i7.PersonModel teacher,
-    required _i7.PersonModel admin,
-    List<_i5.PageRouteInfo>? children,
-  }) : super(
+class AddStudentRoute extends _i7.PageRouteInfo<void> {
+  const AddStudentRoute({List<_i7.PageRouteInfo>? children})
+      : super(
           AddStudentRoute.name,
-          args: AddStudentRouteArgs(
-            key: key,
-            teacher: teacher,
-            admin: admin,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'AddStudentRoute';
 
-  static const _i5.PageInfo<AddStudentRouteArgs> page =
-      _i5.PageInfo<AddStudentRouteArgs>(name);
-}
-
-class AddStudentRouteArgs {
-  const AddStudentRouteArgs({
-    this.key,
-    required this.teacher,
-    required this.admin,
-  });
-
-  final _i6.Key? key;
-
-  final _i7.PersonModel teacher;
-
-  final _i7.PersonModel admin;
-
-  @override
-  String toString() {
-    return 'AddStudentRouteArgs{key: $key, teacher: $teacher, admin: $admin}';
-  }
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
 /// generated route for
 /// [_i3.AddTeacherScreen]
-class AddTeacherRoute extends _i5.PageRouteInfo<AddTeacherRouteArgs> {
-  AddTeacherRoute({
-    _i6.Key? key,
-    required _i7.PersonModel admin,
-    List<_i5.PageRouteInfo>? children,
-  }) : super(
+class AddTeacherRoute extends _i7.PageRouteInfo<void> {
+  const AddTeacherRoute({List<_i7.PageRouteInfo>? children})
+      : super(
           AddTeacherRoute.name,
-          args: AddTeacherRouteArgs(
-            key: key,
-            admin: admin,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'AddTeacherRoute';
 
-  static const _i5.PageInfo<AddTeacherRouteArgs> page =
-      _i5.PageInfo<AddTeacherRouteArgs>(name);
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
 }
 
-class AddTeacherRouteArgs {
-  const AddTeacherRouteArgs({
+/// generated route for
+/// [_i4.NotFoundScreen]
+class NotFoundRoute extends _i7.PageRouteInfo<void> {
+  const NotFoundRoute({List<_i7.PageRouteInfo>? children})
+      : super(
+          NotFoundRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NotFoundRoute';
+
+  static const _i7.PageInfo<void> page = _i7.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.ResponsiveParentReviewScreen]
+class ResponsiveParentReviewRoute
+    extends _i7.PageRouteInfo<ResponsiveParentReviewRouteArgs> {
+  ResponsiveParentReviewRoute({
+    _i8.Key? key,
+    required String id,
+    List<_i7.PageRouteInfo>? children,
+  }) : super(
+          ResponsiveParentReviewRoute.name,
+          args: ResponsiveParentReviewRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'id': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'ResponsiveParentReviewRoute';
+
+  static const _i7.PageInfo<ResponsiveParentReviewRouteArgs> page =
+      _i7.PageInfo<ResponsiveParentReviewRouteArgs>(name);
+}
+
+class ResponsiveParentReviewRouteArgs {
+  const ResponsiveParentReviewRouteArgs({
     this.key,
-    required this.admin,
+    required this.id,
   });
 
-  final _i6.Key? key;
+  final _i8.Key? key;
 
-  final _i7.PersonModel admin;
+  final String id;
 
   @override
   String toString() {
-    return 'AddTeacherRouteArgs{key: $key, admin: $admin}';
+    return 'ResponsiveParentReviewRouteArgs{key: $key, id: $id}';
   }
 }
 
 /// generated route for
-/// [_i4.ResponsiveTemplateReviewScreen]
+/// [_i6.ResponsiveTemplateReviewScreen]
 class ResponsiveTemplateReviewRoute
-    extends _i5.PageRouteInfo<ResponsiveTemplateReviewRouteArgs> {
+    extends _i7.PageRouteInfo<ResponsiveTemplateReviewRouteArgs> {
   ResponsiveTemplateReviewRoute({
-    _i6.Key? key,
+    _i8.Key? key,
     required String id,
-    required _i7.PersonModel student,
-    List<_i5.PageRouteInfo>? children,
+    List<_i7.PageRouteInfo>? children,
   }) : super(
           ResponsiveTemplateReviewRoute.name,
           args: ResponsiveTemplateReviewRouteArgs(
             key: key,
             id: id,
-            student: student,
           ),
           rawPathParams: {'id': id},
           initialChildren: children,
@@ -182,25 +193,22 @@ class ResponsiveTemplateReviewRoute
 
   static const String name = 'ResponsiveTemplateReviewRoute';
 
-  static const _i5.PageInfo<ResponsiveTemplateReviewRouteArgs> page =
-      _i5.PageInfo<ResponsiveTemplateReviewRouteArgs>(name);
+  static const _i7.PageInfo<ResponsiveTemplateReviewRouteArgs> page =
+      _i7.PageInfo<ResponsiveTemplateReviewRouteArgs>(name);
 }
 
 class ResponsiveTemplateReviewRouteArgs {
   const ResponsiveTemplateReviewRouteArgs({
     this.key,
     required this.id,
-    required this.student,
   });
 
-  final _i6.Key? key;
+  final _i8.Key? key;
 
   final String id;
 
-  final _i7.PersonModel student;
-
   @override
   String toString() {
-    return 'ResponsiveTemplateReviewRouteArgs{key: $key, id: $id, student: $student}';
+    return 'ResponsiveTemplateReviewRouteArgs{key: $key, id: $id}';
   }
 }

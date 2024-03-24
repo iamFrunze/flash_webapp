@@ -1,6 +1,6 @@
 {
-    "name": "teacher_review",
-    "short_name": "teacher_review",
+    "name": "Flash",
+    "short_name": "Flash",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

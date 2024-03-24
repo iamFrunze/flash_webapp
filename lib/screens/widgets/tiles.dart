@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TilesWidget extends StatelessWidget {
   const TilesWidget({
@@ -6,11 +8,13 @@ class TilesWidget extends StatelessWidget {
     required this.title,
     required this.onTap,
     required this.onDelete,
+    this.id,
   });
 
   final String title;
   final GestureTapCallback onTap;
   final GestureTapCallback onDelete;
+  final String? id;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +22,28 @@ class TilesWidget extends StatelessWidget {
       child: Card(
         child: ListTile(
           onTap: onTap,
+          leading: id != null
+              ? IconButton(
+                  icon: const Icon(Icons.share_rounded),
+                  color: Colors.white,
+                  onPressed: () async {
+
+
+                    Share.share(
+                        'https://flash-webapp-8b454.web.app/#/student/$id' ??
+                            '');
+                    Clipboard.setData(ClipboardData(
+                        text:
+                        'https://flash-webapp-8b454.web.app/#/student/$id' ??
+                            ''));
+                       ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Скопировано'),
+                        ),
+                    );
+                  },
+                )
+              : null,
           trailing: IconButton(
             onPressed: onDelete,
             icon: const Icon(
