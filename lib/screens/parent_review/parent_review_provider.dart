@@ -22,32 +22,29 @@ class ParentReviewProvider extends ChangeNotifier {
           PersonModel(name: studentParse['name'], uuid: studentParse['uuid']);
       qualities = [
         ParentReviewModel(
-            name: 'Лексико-грамматический диктант (Критерий "Лексика")',
+            name: 'Результаты коррекционной работы',
             quality: (studentParse['qualities'] as List<dynamic>)[0][0]),
         ParentReviewModel(
-            name: 'Лексико-грамматический диктант (Критерий "Грамматика")',
+            name: 'Говорение',
             quality: (studentParse['qualities'] as List<dynamic>)[0][1]),
         ParentReviewModel(
             name: 'Чтение',
             quality: (studentParse['qualities'] as List<dynamic>)[0][2]),
         ParentReviewModel(
-            name: 'Устная часть (Диалог)',
+            name: 'Аудирование',
             quality: (studentParse['qualities'] as List<dynamic>)[0][3]),
         ParentReviewModel(
-            name: 'Устная часть (Монолог)',
+            name: 'Сочинение',
             quality: (studentParse['qualities'] as List<dynamic>)[0][4]),
         ParentReviewModel(
-            name: 'Сочинение',
+            name: 'Старание и вовлеченность в процесс  урока',
             quality: (studentParse['qualities'] as List<dynamic>)[0][5]),
         ParentReviewModel(
-            name: 'Аудирование',
+            name: 'Дисциплина',
             quality: (studentParse['qualities'] as List<dynamic>)[0][6]),
         ParentReviewModel(
-            name: 'Награды',
+            name: 'Рекомендации',
             quality: (studentParse['qualities'] as List<dynamic>)[0][7]),
-        ParentReviewModel(
-            name: 'Итоги',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][8]),
       ];
       isExists = true;
     }

@@ -164,13 +164,13 @@ class _TemplateReviewScreenState extends State<TemplateReviewScreen> {
                   ),
                 ),
               ),
-              DropdownMenu(
-                initialSelection: '1 - 3 уровни',
-                onSelected: reader.onSelectedDropLevel,
-                dropdownMenuEntries: ['1 - 3 уровни', '4 - 7 уровни']
-                    .map((e) => DropdownMenuEntry(value: e, label: e))
-                    .toList(),
-              ),
+              // DropdownMenu(
+              //   initialSelection: '1 - 3 уровни',
+              //   onSelected: reader.onSelectedDropLevel,
+              //   dropdownMenuEntries: ['1 - 3 уровни', '4 - 7 уровни']
+              //       .map((e) => DropdownMenuEntry(value: e, label: e))
+              //       .toList(),
+              // ),
               const SizedBox(height: 8),
             ],
           ),

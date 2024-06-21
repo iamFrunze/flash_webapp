@@ -37,31 +37,31 @@ class QualityChangeWidget extends StatelessWidget {
             shrinkWrap: true,
             separatorBuilder: (ctx, index) => Divider(),
             itemBuilder: (context, index) {
-              return RadioListTile(
-                value: quality.values[index],
-                title: Text(quality.values[index]),
-                groupValue: currentQuality,
-                onChanged: onChanged,
-                activeColor: const Color(0xffFF7F00),
-              );
+              // return RadioListTile(
+              //   value: quality.values[index],
+              //   title: Text(quality.values[index]),
+              //   groupValue: currentQuality,
+              //   onChanged: onChanged,
+              //   activeColor: const Color(0xffFF7F00),
+              // );
 
               /// ЕСЛИ БЛЯТЬ ОНИ ЗАХОТЯТ ВЕРНУТЬ ЧЕКБОКСЫ
-              // if (!isLast) {
-              //   return RadioListTile(
-              //     value: quality.values[index],
-              //     title: Text(quality.values[index]),
-              //     groupValue: currentQuality,
-              //     onChanged: onChanged,
-              //     activeColor: const Color(0xffFF7F00),
-              //   );
-              // } else {
-              //   return CheckboxListTile(
-              //     value: watcher.recomendationQuality[index],
-              //     title: Text(quality.values[index]),
-              //     onChanged: (value) => reader.checkRec(index, value),
-              //     activeColor: const Color(0xffFF7F00),
-              //   );
-              // }
+              if (!isLast) {
+                return RadioListTile(
+                  value: quality.values[index],
+                  title: Text(quality.values[index]),
+                  groupValue: currentQuality,
+                  onChanged: onChanged,
+                  activeColor: const Color(0xffFF7F00),
+                );
+              } else {
+                return CheckboxListTile(
+                  value: watcher.recomendationQuality[index],
+                  title: Text(quality.values[index]),
+                  onChanged: (value) => reader.checkRec(index, value),
+                  activeColor: const Color(0xffFF7F00),
+                );
+              }
             },
           ),
         ],
