@@ -18,33 +18,32 @@ class ParentReviewProvider extends ChangeNotifier {
       Map<dynamic, dynamic> studentParse =
           fetchStudent.value as Map<dynamic, dynamic>;
       month = studentParse['month'];
-      student =
-          PersonModel(name: studentParse['name'], uuid: studentParse['uuid']);
+      student = PersonModel(
+        name: studentParse['name'],
+        uuid: studentParse['uuid'],
+      );
+
       qualities = [
         ParentReviewModel(
-            name: 'Результаты коррекционной работы',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][0]),
+          name: 'Монолог',
+          quality: studentParse['qualities'][0],
+        ),
         ParentReviewModel(
-            name: 'Говорение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][1]),
+          name: 'Диалог',
+          quality: studentParse['qualities'][1],
+        ),
         ParentReviewModel(
-            name: 'Чтение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][2]),
+          name: 'Грамматика',
+          quality: studentParse['qualities'][2],
+        ),
         ParentReviewModel(
-            name: 'Аудирование',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][3]),
+          name: 'Лексические темы',
+          quality: studentParse['qualities'][3],
+        ),
         ParentReviewModel(
-            name: 'Сочинение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][4]),
-        ParentReviewModel(
-            name: 'Старание и вовлеченность в процесс  урока',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][5]),
-        ParentReviewModel(
-            name: 'Дисциплина',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][6]),
-        ParentReviewModel(
-            name: 'Рекомендации',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][7]),
+          name: 'Чтение',
+          quality: studentParse['qualities'][4],
+        ),
       ];
       isExists = true;
     }

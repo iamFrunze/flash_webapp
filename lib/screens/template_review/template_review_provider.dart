@@ -16,6 +16,7 @@ class TemplateReviewProvider extends ChangeNotifier {
     quality6,
     quality7,
     quality8,
+    quality9,
   ];
   final qualities2 = <ReviewModel>[
     quality1,
@@ -26,6 +27,7 @@ class TemplateReviewProvider extends ChangeNotifier {
     quality6,
     quality7,
     quality8,
+    quality9,
   ];
 
   List<ReviewModel> qualities = [];
@@ -36,8 +38,17 @@ class TemplateReviewProvider extends ChangeNotifier {
   }
 
   /// плашка с уровнями
-  // String currentSelected = '1 - 3 уровни';
-  // final selected = ['1 - 3 уровни', '4 - 7 уровни'];
+
+  final levels = [
+    '1 уровень',
+    '2 уровень',
+    '3 уровень',
+    '4 уровень',
+    '5 уровень',
+    '6 уровень',
+    '7 уровень',
+  ];
+  String currentSelected = '';
 
   PersonModel? admin;
   PersonModel? teacher;
@@ -47,21 +58,21 @@ class TemplateReviewProvider extends ChangeNotifier {
     text: DateFormat.yMMMM('ru').format(DateTime.now()),
   );
 
-  /// БЕЗ ЧЕКБОКСОВ
+  /// C ЧЕКБОКСОВ
   late List<bool> recomendationQuality =
       List.generate(qualities1.last.values.length, (index) => false);
   final List<String> rec = [];
 
   ///TODO (iam) ЕСЛИ БЛЯТЬ ПОЯВИТСЯ ПЛАШКА С УРОВНЯМИ
-  // void onSelectedDropLevel(String? str) {
-  //   currentSelected = str ?? '1 - 3 уровни';
-  //   if (str != null && str == selected.first) {
-  //     qualities = qualities1;
-  //   } else {
-  //     qualities = qualities2;
-  //   }
-  //   notifyListeners();
-  // }
+  void onSelectedDropLevel(String? str) {
+    currentSelected = str ?? levels.first;
+    if (str != null && str == levels.first) {
+      qualities = qualities1;
+    } else {
+      qualities = qualities2;
+    }
+    notifyListeners();
+  }
 
   void setupDate(DateTimeRange date) {
     final dateStart = date.start;
@@ -77,6 +88,7 @@ class TemplateReviewProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// ЧЕК БОКС
   void checkRec(int index, bool? value) {
     recomendationQuality[index] = value ?? false;
     if (value != null && value) {
@@ -111,50 +123,57 @@ class TemplateReviewProvider extends ChangeNotifier {
     if (fetchStudent.exists) {
       Map<dynamic, dynamic> studentParse =
           fetchStudent.value as Map<dynamic, dynamic>;
-      student =
-          PersonModel(name: studentParse['name'], uuid: studentParse['uuid']);
-
-      final fromQualities = [
-        ParentReviewModel(
-            name: 'Результаты коррекционной работы',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][0]),
-        ParentReviewModel(
-            name: 'Говорение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][1]),
-        ParentReviewModel(
-            name: 'Чтение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][2]),
-        ParentReviewModel(
-            name: 'Аудирование',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][3]),
-        ParentReviewModel(
-            name: 'Сочинение',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][4]),
-        ParentReviewModel(
-            name: 'Старание и вовлеченность в процесс  урока',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][5]),
-        ParentReviewModel(
-            name: 'Дисциплина',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][6]),
-        ParentReviewModel(
-            name: 'Рекомендации',
-            quality: (studentParse['qualities'] as List<dynamic>)[0][7]),
-      ];
-      qualities.mapIndexed((index, element) {
-        element.currentValue = fromQualities[index].quality;
-      }).toList();
-      debugPrint('student = ${qualities.last.currentValue}');
+      student = PersonModel(
+        name: studentParse['name'],
+        uuid: studentParse['uuid'],
+      );
+      //
+      // final fromQualities = [
+      //   ParentReviewModel(
+      //       name: 'Лексика',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][0] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Грамматика',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][1] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Чтение',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][2] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Аудирование',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][3] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Говорение',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][4] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Сочинения',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][5] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Старание и вовлеченность в процесс  урока',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][6] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Дисциплина',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][7] ?? ''),
+      //   ParentReviewModel(
+      //       name: 'Рекомендации',
+      //       quality: (studentParse['qualities'] as List<dynamic>)[0][8] ?? ''),
+      // ];
+      // qualities.mapIndexed((index, element) {
+      //   element.currentValue = fromQualities[index].quality;
+      // }).toList();
+      // debugPrint('student = ${qualities.last.currentValue}');
       final rec = qualities.last.currentValue.replaceAll('\n', '').split('* ');
       debugPrint('кус = ${rec}');
 
-      recomendationQuality = qualities1.last.values.mapIndexed((index, element) {
+      /// CHECK BOX
+      recomendationQuality =
+          qualities1.last.values.mapIndexed((index, element) {
         if (rec.contains(element)) {
           return true;
         } else {
           return false;
         }
       }).toList();
-      debugPrint('кус = ${recomendationQuality}');
+      // debugPrint('кус = ${recomendationQuality}');
 
       notifyListeners();
     }

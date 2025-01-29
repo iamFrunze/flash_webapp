@@ -7,6 +7,7 @@ import 'package:flash/screens/parent_review/parent_review_provider.dart';
 import 'package:flash/screens/template_review/template_review_provider.dart';
 import 'package:flash/utils/app_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as riverpod;
 import 'package:provider/provider.dart';
 
 import 'app.dart';
@@ -31,7 +32,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => TemplateReviewProvider()),
         ChangeNotifierProvider(create: (context) => ParentReviewProvider()),
       ],
-      child: const App(),
+      child: const riverpod.ProviderScope(child: App()),
     ),
   );
 }

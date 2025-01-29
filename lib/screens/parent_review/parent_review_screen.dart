@@ -1,5 +1,6 @@
 import 'package:flash/screens/parent_review/parent_review_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_dimensions.dart';
@@ -28,10 +29,10 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
   @override
   Widget build(BuildContext context) {
     final ParentReviewProvider watcher =
-    Provider.of<ParentReviewProvider>(context);
+        Provider.of<ParentReviewProvider>(context);
     final ParentReviewProvider reader =
-    Provider.of<ParentReviewProvider>(context, listen: false);
-
+        Provider.of<ParentReviewProvider>(context, listen: false);
+    Logger().i('123123');
     if (watcher.isExists != null) {
       if (watcher.qualities != null && watcher.student != null) {
         return Scaffold(
@@ -79,7 +80,7 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                   vertical: 16,
                 ),
                 child: Text(
-                  'Обратная связь по образовательным результатам за период с февраля по март 2024г.',
+                  'Обратная связь по образовательным итогам за период ноябрь-январь 2024-2025 учебного года',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: const Color(0xFF003F49),
@@ -116,7 +117,6 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       ListView.builder(
                         shrinkWrap: true,
                         primary: false,
@@ -135,8 +135,10 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  subtitle:
-                                  Text(watcher.qualities![index].quality),
+                                  subtitle: Text(
+                                    watcher.qualities![index].quality
+                                        .replaceAll(';', '\n'),
+                                  ),
                                 ),
                               ),
                             );
@@ -148,14 +150,9 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                               ),
                               child: const Text(
                                 '\n\n       В случае снижения мотивации ребёнка относительно посещения занятий, выполнения домашних работ, резких ухудшений оценок в школе по английскому языку, напишите, пожалуйста, администратору с описанием ситуации. Мы передадим информацию в методический отдел, найдем решение для корректировки ситуации и свяжемся с Вами для обратной связи и более детального общения.'
-
-                                '\n\n       Важно понимать, качественное освоение языка - не простой и не быстрый путь.'
-
-                                '\n\n       Ведь правильная цель изучения английского языка - это освоить (доучить) язык до того уровня, при котором ребёнок сможет применять полученные знания, как в школе (самостоятельно выполнять домашнее задание,повышать успеваемость и оценки своими усилиями), так и во взрослой жизни, закладывая фундамент его успешного будущего.'
-
-                                '\n\n       Семиуровневая программа “Flash”, наша миссия и весь процесс обучения направлены на то, чтобы помочь вашим детям добиться этой цели! Успехов в обучении!'
-
-                                '\n\n       Успехов в обучении!',
+                                '\n\n       Ведь правильная цель изучения английского языка - это освоить (доучить) язык до того уровня, при котором ребёнок сможет применять полученные знания, как в школе (самостоятельно выполнять домашнее задание, повышать успеваемость и оценки своими усилиями), так и во взрослой жизни, закладывая фундамент его успешного будущего. '
+                                '\n\n       Важно помнить, что качественное изучение (освоение) языка - это не простой  и не быстрый процесс!'
+                                '\n\n       Семиуровневая программа “Flash”, наша миссия и весь процесс обучения направлены на то, чтобы помочь вашим детям добиться этой цели! Успехов в обучении!',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             );

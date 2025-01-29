@@ -35,8 +35,9 @@ class QualityChangeWidget extends StatelessWidget {
             primary: false,
             itemCount: quality.values.length,
             shrinkWrap: true,
-            separatorBuilder: (ctx, index) => Divider(),
+            separatorBuilder: (ctx, index) => const Divider(),
             itemBuilder: (context, index) {
+              /// ЕСЛИ БЛЯТЬ ОНИ ХОТЯТ БЕЗ ЧЕКБОКСОВ
               // return RadioListTile(
               //   value: quality.values[index],
               //   title: Text(quality.values[index]),
