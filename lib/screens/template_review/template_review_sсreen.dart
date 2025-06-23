@@ -133,7 +133,7 @@ class _TemplateReviewScreenState
                   vertical: 16,
                 ),
                 child: Text(
-                  'Обратная связь по образовательным итогам за период ноябрь-январь 2024-2025 учебного года',
+                  'Обратная связь по пройденным темам и образовательным итогам за период ноябрь-апрель 2024-2025 учебного года',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: const Color(0xFF003F49),

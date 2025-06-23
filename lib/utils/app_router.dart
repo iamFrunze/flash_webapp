@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import 'app_router.gr.dart';
 
@@ -59,6 +60,8 @@ class CheckIfBookExists extends AutoRouteGuard {
     if (students.exists) {
       Map<dynamic, dynamic> studentsParse =
           students.value as Map<dynamic, dynamic>;
+
+      Logger().i('student $studentsParse');
       return studentsParse.containsKey(id);
     } else {
       return false;

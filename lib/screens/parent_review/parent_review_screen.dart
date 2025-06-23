@@ -22,7 +22,9 @@ class ParentReviewScreen extends StatefulWidget {
 class _ParentReviewScreenState extends State<ParentReviewScreen> {
   @override
   void initState() {
-    Provider.of<ParentReviewProvider>(context, listen: false).init(widget.id);
+    if (mounted) {
+      Provider.of<ParentReviewProvider>(context, listen: false).init(widget.id);
+    }
     super.initState();
   }
 
@@ -80,7 +82,7 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                   vertical: 16,
                 ),
                 child: Text(
-                  'Обратная связь по образовательным итогам за период ноябрь-январь 2024-2025 учебного года',
+                  'Обратная связь по пройденным темам и образовательным итогам за период ноябрь-апрель 2024-2025 учебного года',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: const Color(0xFF003F49),
@@ -121,28 +123,32 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                         shrinkWrap: true,
                         primary: false,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: watcher.qualities!.length + 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index < watcher.qualities!.length) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: widget.appDimensions.padding(),
-                              ),
-                              child: Card(
-                                child: ListTile(
-                                  title: Text(
-                                    watcher.qualities![index].name,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Text(
-                                    watcher.qualities![index].quality
-                                        .replaceAll(';', '\n'),
-                                  ),
-                                ),
+                        itemCount: watcher.qualities!.length + 3,
+                        itemBuilder: (BuildContext context, int themeIndex) {
+                          if (themeIndex == 0) {
+                            // В начало списка
+                            return const Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Информация об успеваемости:',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
                               ),
                             );
-                          } else {
+                          }
+                          if (themeIndex == 8) {
+                            // После 7-го элемента (index 1–7 → 7 элементов, index 8 — наш текст)
+                            return const Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Перечень тем, которые будут изучаться в следующих месяцах:',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                            );
+                          }
+
+                          if (themeIndex == 15) {
                             return Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: widget.appDimensions.padding(),
@@ -157,6 +163,28 @@ class _ParentReviewScreenState extends State<ParentReviewScreen> {
                               ),
                             );
                           }
+
+                          final itemIndex =
+                              themeIndex > 8 ? themeIndex - 2 : themeIndex - 1;
+
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: widget.appDimensions.padding(),
+                            ),
+                            child: Card(
+                              child: ListTile(
+                                title: Text(
+                                  watcher.qualities![itemIndex].name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                subtitle: Text(
+                                  watcher.qualities![itemIndex].quality
+                                      .replaceAll(';', '\n'),
+                                ),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     ],

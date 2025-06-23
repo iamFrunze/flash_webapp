@@ -19,8 +19,31 @@ class LvlPage extends ConsumerWidget {
       return Expanded(
         child: ListView.separated(
           shrinkWrap: true,
-          itemCount: lvls[lvl].themes.length,
+          itemCount: lvls[lvl].themes.length + 2,
           itemBuilder: (BuildContext context, int themeIndex) {
+            if (themeIndex == 0) {
+              // В начало списка
+              return const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Информация об успеваемости:',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              );
+            }
+            if (themeIndex == 8) {
+              // После 7-го элемента (index 1–7 → 7 элементов, index 8 — наш текст)
+              return const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Перечень тем, которые будут изучаться в следующих месяцах:',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              );
+            }
+
+            final itemIndex = themeIndex > 8 ? themeIndex - 2 : themeIndex - 1;
+
             return Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: appDimensions.padding(),
@@ -29,14 +52,14 @@ class LvlPage extends ConsumerWidget {
               child: Card(
                 child: ListTile(
                   title: Text(
-                    lvls[lvl].themes[themeIndex].theme ?? '',
+                    lvls[lvl].themes[itemIndex].theme ?? '',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: lvls[lvl].themes[themeIndex].values.length,
+                    itemCount: lvls[lvl].themes[itemIndex].values.length,
                     itemBuilder: (BuildContext context, int valueIndex) {
-                      final element = lvls[lvl].themes[themeIndex];
+                      final element = lvls[lvl].themes[itemIndex];
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: appDimensions.padding(),
